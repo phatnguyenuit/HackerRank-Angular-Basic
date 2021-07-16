@@ -1,6 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
-import { distinctUntilChanged } from "rxjs/operators";
 
 @Component({
   selector: "temperature-converter",
@@ -8,24 +6,24 @@ import { distinctUntilChanged } from "rxjs/operators";
   styleUrls: ["./temperatureConverter.component.scss"],
 })
 export class TemperatureConverter implements OnInit {
-  formGroup: FormGroup;
-  constructor(private formBuilder: FormBuilder) {}
+  c = "";
+  f = "";
+  constructor() {}
 
-  ngOnInit() {
-    // C = (F − 32) × 5/9
-    // F = C*9/5 + 32
-    this.formGroup = this.formBuilder.group({
-      c: [""],
-      f: [""],
-    });
+  ngOnInit() {}
 
-    this.formGroup.valueChanges.subscribe((values) => {
-      const { f, c } = values;
-      const newF = c ? (c * (9 / 5) + 32).toFixed(1) : "";
-      const newC = f ? ((f - 32) * (5 / 9)).toFixed(1) : "";
+  onChange(value: string | null, type: "c" | "f") {
+    if (value === null) {
+      this.c = "";
+      this.f = "";
+      return;
+    }
 
-      this.formGroup.get("f").setValue(newF);
-      this.formGroup.get("c").setValue(newC);
-    });
+    const temperature = Number(value);
+    if (type === "c") {
+      this.f = ((temperature * 9) / 5 + 32).toFixed(1);
+    } else {
+      this.c = (((temperature - 32) * 5) / 9).toFixed(1);
+    }
   }
 }
