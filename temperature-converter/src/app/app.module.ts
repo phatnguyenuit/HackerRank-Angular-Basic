@@ -12,7 +12,6 @@ import { RouterTestingModule } from "@angular/router/testing";
   imports: [
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule,
     RouterTestingModule,
     RouterModule.forRoot([{ path: "", component: TemperatureConverter }]),
   ],
